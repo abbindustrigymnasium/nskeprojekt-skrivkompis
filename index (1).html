@@ -1,0 +1,1107 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Din Personliga Skrivkompis</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+    :root {
+      --yellow: #BFA56A;
+      --orange: #1F4E79;
+      --green: #2F7C5F;
+      --green-dark: #215C44;
+      --blue: #1F4E79;
+      --blue-light: #EEF2F7;
+      --red: #9F3B3B;
+      --purple: #5E5281;
+      --white: #FFFFFF;
+      --bg: #F4F5F7;
+      --card: #FFFFFF;
+      --text: #1F2933;
+      --muted: #5B6B7D;
+      --radius: 10px;
+      --radius-sm: 6px;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Inter', system-ui, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+    }
+
+    /* ===== HEADER ===== */
+    header {
+      background: var(--orange);
+      padding: 20px 24px 16px;
+      text-align: center;
+      border-bottom: 2px solid rgba(0,0,0,0.12);
+    }
+
+    header h1 {
+      font-family: inherit;
+      font-size: 2rem;
+      color: white;
+      text-shadow: none;
+    }
+
+    header p {
+      font-size: 1rem;
+      color: rgba(255,255,255,0.9);
+      margin-top: 4px;
+    }
+
+    /* ===== AGE PICKER ===== */
+    #age-bar {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      padding: 14px 16px;
+      background: #F8FAFC;
+      border-bottom: 1px solid #E2E8F0;
+      flex-wrap: wrap;
+    }
+
+    #age-bar span {
+      font-weight: 700;
+      font-size: 0.9rem;
+      color: var(--muted);
+      display: flex;
+      align-items: center;
+    }
+
+    .age-btn {
+      padding: 6px 18px;
+      border-radius: 10px;
+      border: 2.5px solid #ddd;
+      background: white;
+      font-family: inherit;
+      font-weight: 800;
+      font-size: 0.9rem;
+      cursor: pointer;
+      transition: all 0.2s;
+      color: var(--text);
+    }
+
+    .age-btn:hover { border-color: var(--orange); color: var(--orange); }
+    .age-btn.active { background: var(--orange); border-color: var(--orange); color: white; }
+
+    /* ===== NAVIGATION TABS ===== */
+    #tabs {
+      display: flex;
+      gap: 0;
+      background: white;
+      border-bottom: 1px solid #E2E8F0;
+      overflow-x: auto;
+    }
+
+    .tab-btn {
+      flex: 1;
+      padding: 14px 8px;
+      border: none;
+      background: none;
+      font-family: inherit;
+      font-weight: 700;
+      font-size: 0.85rem;
+      cursor: pointer;
+      color: var(--muted);
+      border-bottom: 3px solid transparent;
+      margin-bottom: -3px;
+      transition: all 0.2s;
+      white-space: nowrap;
+    }
+
+    .tab-btn:hover { color: var(--orange); }
+    .tab-btn.active { color: var(--orange); border-bottom-color: var(--orange); }
+
+    /* ===== MAIN CONTENT ===== */
+    main {
+      max-width: 700px;
+      margin: 0 auto;
+      padding: 24px 16px;
+    }
+
+    .panel { display: none; }
+    .panel.active { display: block; }
+
+    /* ===== CARDS ===== */
+    .card {
+      background: var(--card);
+      border-radius: var(--radius);
+      padding: 24px;
+      margin-bottom: 20px;
+      border: 1px solid #D1D5DB;
+      box-shadow: 0 1px 2px rgba(31, 41, 55, 0.06);
+    }
+
+    .card-title {
+      font-family: inherit;
+      font-size: 1.2rem;
+      color: var(--orange);
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .card-title .icon { font-size: 1.4rem; }
+
+    /* ===== TEXTAREA ===== */
+    textarea {
+      width: 100%;
+      min-height: 120px;
+      border-radius: var(--radius-sm);
+      border: 2.5px solid #ddd;
+      padding: 14px;
+      font-family: inherit;
+      font-size: 1.1rem;
+      resize: vertical;
+      outline: none;
+      transition: border-color 0.2s;
+      line-height: 1.6;
+    }
+
+    textarea:focus { border-color: var(--orange); }
+
+    /* ===== BUTTONS ===== */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 12px 24px;
+      border-radius: 10px;
+      border: none;
+      font-family: inherit;
+      font-weight: 800;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .btn:active { transform: scale(0.96); }
+
+    .btn-primary { background: var(--orange); color: white; box-shadow: none; }
+    .btn-primary:hover { background: #173f65; }
+
+    .btn-green { background: var(--green); color: white; box-shadow: none; }
+    .btn-green:hover { background: #276c51; }
+
+    .btn-purple { background: var(--purple); color: white; box-shadow: none; }
+    .btn-purple:hover { background: #4a426f; }
+
+    .btn-sm {
+      padding: 8px 16px;
+      font-size: 0.9rem;
+    }
+
+    /* ===== FEEDBACK BOX ===== */
+    #feedback-box {
+      display: none;
+      margin-top: 20px;
+      border-radius: var(--radius);
+      padding: 20px;
+      animation: none;
+    }
+
+    @keyframes popIn {
+      0% { transform: scale(0.9); opacity: 0; }
+      100% { transform: scale(1); opacity: 1; }
+    }
+
+    .feedback-great { background: #F3F9F5; border: 1px solid #C7DBC8; }
+    .feedback-ok    { background: #F8FAFC; border: 1px solid #CBD5E1; }
+    .feedback-error { background: #FEF3F2; border: 1px solid #FBCACA; }
+
+    .feedback-emoji { font-size: 2.5rem; text-align: center; margin-bottom: 8px; }
+    .feedback-title { font-family: inherit; font-size: 1.2rem; margin-bottom: 10px; }
+    .feedback-great .feedback-title { color: var(--green-dark); }
+    .feedback-ok .feedback-title { color: #B88A00; }
+    .feedback-error .feedback-title { color: var(--red); }
+
+    .feedback-items { list-style: none; }
+    .feedback-items li {
+      padding: 6px 0;
+      font-size: 1rem;
+      display: flex;
+      gap: 8px;
+      align-items: flex-start;
+    }
+
+    .tag {
+      display: inline-block;
+      padding: 2px 10px;
+      border-radius: 8px;
+      font-size: 0.78rem;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+
+    .ai-feedback {
+      margin-top: 16px;
+    }
+
+    .ai-section {
+      background: #ffffff;
+      border: 1px solid #D7E3F0;
+      border-radius: 12px;
+      padding: 14px;
+      margin-top: 12px;
+    }
+
+    .ai-section-title {
+      font-size: 0.95rem;
+      font-weight: 800;
+      color: var(--orange);
+      margin-bottom: 8px;
+    }
+
+    .ai-section-text {
+      font-size: 0.96rem;
+      color: #23303f;
+      line-height: 1.7;
+      white-space: pre-wrap;
+    }
+
+    .ai-block-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      margin-bottom: 8px;
+      color: #1F4E79;
+      font-size: 0.9rem;
+      font-weight: 700;
+    }
+
+    .tag-error { background: #FFD6E0; color: #C0274A; }
+    .tag-ok    { background: #FFF0B3; color: #8A6700; }
+    .tag-good  { background: #C8FFE8; color: #037A50; }
+
+    /* ===== WORD EXERCISE ===== */
+    .word-display {
+      font-family: inherit;
+      font-size: 2rem;
+      text-align: center;
+      color: var(--blue);
+      padding: 20px;
+      background: var(--blue-light);
+      border-radius: var(--radius-sm);
+      margin-bottom: 16px;
+      letter-spacing: 0.5px;
+    }
+
+    .word-input {
+      width: 100%;
+      padding: 14px;
+      font-size: 1.4rem;
+      text-align: center;
+      border-radius: var(--radius-sm);
+      border: 2.5px solid #ddd;
+      font-family: inherit;
+      outline: none;
+      font-weight: 700;
+    }
+
+    .word-input:focus { border-color: var(--blue); }
+    .word-input.correct { border-color: var(--green); background: #EFF7EF; }
+    .word-input.wrong   { border-color: var(--red);   background: #FEF2F2; }
+
+    .word-result {
+      text-align: center;
+      font-size: 1.1rem;
+      font-weight: 700;
+      margin-top: 10px;
+      min-height: 30px;
+    }
+
+    .stars {
+      text-align: center;
+      font-size: 2rem;
+      margin: 10px 0;
+    }
+
+    /* ===== FILL-IN ===== */
+    .fill-sentence {
+      font-size: 1.2rem;
+      line-height: 2.4;
+      margin-bottom: 16px;
+    }
+
+    .fill-blank {
+      display: inline-block;
+      border: none;
+      border-bottom: 3px solid var(--orange);
+      padding: 2px 8px;
+      width: 120px;
+      font-size: 1.1rem;
+      font-family: inherit;
+      font-weight: 700;
+      text-align: center;
+      outline: none;
+      background: transparent;
+      color: var(--blue);
+    }
+
+    .fill-blank.correct { border-bottom-color: var(--green); color: var(--green-dark); }
+    .fill-blank.wrong   { border-bottom-color: var(--red);   color: var(--red); }
+
+    /* ===== LISTEN / TTS BUTTON ===== */
+    .listen-btn {
+      background: var(--blue-light);
+      border: 2px solid var(--blue);
+      color: var(--blue);
+      font-family: inherit;
+      font-weight: 700;
+      padding: 8px 20px;
+      border-radius: 10px;
+      cursor: pointer;
+      font-size: 0.95rem;
+      transition: all 0.2s;
+    }
+
+    .listen-btn:hover { background: var(--blue); color: white; }
+
+    /* ===== SCORE BAR ===== */
+    .score-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 16px;
+    }
+
+    .score-pill {
+      background: #F1F5F9;
+      color: var(--text);
+      font-weight: 700;
+      padding: 6px 16px;
+      border-radius: 8px;
+      font-size: 0.9rem;
+    }
+
+    /* ===== PROGRESS ===== */
+    .progress-row {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 16px;
+      flex-wrap: wrap;
+    }
+
+    .dot {
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      background: #ddd;
+      flex-shrink: 0;
+    }
+
+    .dot.done-correct { background: var(--green); }
+    .dot.done-wrong   { background: var(--red); }
+    .dot.current      { background: var(--orange); border: 2px solid rgba(31, 41, 55, 0.15); width: 18px; height: 18px; margin-top: -2px; }
+
+    /* ===== FOOTER ===== */
+    footer {
+      text-align: center;
+      padding: 20px;
+      font-size: 0.8rem;
+      color: var(--muted);
+    }
+
+    /* Utility */
+    .flex-row { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; }
+    .mt-12 { margin-top: 12px; }
+    .mt-20 { margin-top: 20px; }
+    .hidden { display: none; }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>Din Personliga Skrivkompis</h1>
+  <p>Träna på att skriva — och få hjälp direkt!</p>
+</header>
+
+<!-- Age picker -->
+<div id="age-bar">
+  <span>Din ålder:</span>
+  <button class="age-btn active" data-age="6" onclick="setAge(6)">6–7 år</button>
+  <button class="age-btn" data-age="8" onclick="setAge(8)">8–9 år</button>
+  <button class="age-btn" data-age="10" onclick="setAge(10)">10–12 år</button>
+</div>
+
+<div class="card" style="background:#F8FAFC;">
+  <div class="card-title">AI-funktion</div>
+  <p style="margin:0; color:#555; line-height:1.6;">
+    Kör en lokal server i samma mapp och proxy-anrop till OpenAI därifrån. Öppna sedan sidan via <code>http://localhost:3000/index%20(1).html</code>.
+  </p>
+</div>
+
+<!-- Navigation -->
+<div id="tabs">
+  <button class="tab-btn active" onclick="showPanel('sentences')">Meningar</button>
+  <button class="tab-btn" onclick="showPanel('words')">Ord</button>
+  <button class="tab-btn" onclick="showPanel('fillin')">Fyll i</button>
+</div>
+
+<main>
+
+  <!-- ===== PANEL 1: SENTENCES ===== -->
+  <div id="panel-sentences" class="panel active">
+
+    <div class="card">
+      <div class="card-title">Skriv en mening</div>
+
+      <p id="sentence-prompt" style="margin-bottom:14px; font-size:1rem; color:#555; line-height:1.5;">
+        Skriv en mening om vad du gillar att göra på fritiden.
+      </p>
+
+      <textarea id="sentence-input" placeholder="Skriv din mening här..."></textarea>
+
+      <div class="flex-row mt-12">
+        <button class="btn btn-primary" onclick="checkSentence()">Kolla meningen</button>
+        <button class="listen-btn" onclick="readAloud('sentence-input')">Läs upp</button>
+        <button class="btn btn-sm" style="background:#F0F0F0; color:#555; border:none; box-shadow:none;" onclick="newPrompt()">Nytt ämne</button>
+        <button class="btn btn-sm" style="background:#EEF2FF; color:#1F4E79; border:none; box-shadow:none;" onclick="generateAiPrompt()">AI-generera</button>
+      </div>
+
+      <div id="feedback-box"></div>
+    </div>
+
+    <div class="card" style="background:#F8FAFC;">
+      <div class="card-title" style="color:var(--red);">Kom ihåg!</div>
+      <ul id="reminder-list" style="list-style:none; line-height:2;">
+        <li>Börja med stor bokstav</li>
+        <li>Avsluta med punkt, utropstecken eller frågetecken</li>
+        <li>Kolla stavningen på varje ord</li>
+      </ul>
+    </div>
+
+  </div>
+
+  <!-- ===== PANEL 2: WORDS ===== -->
+  <div id="panel-words" class="panel">
+
+    <div class="card">
+      <div class="score-row">
+        <div class="card-title" style="margin-bottom:0;">Stava ordet!</div>
+        <div class="score-pill" id="word-score">Poäng: 0</div>
+      </div>
+
+      <div id="word-progress" class="progress-row"></div>
+
+      <div class="word-display" id="word-display"></div>
+
+      <div class="flex-row" style="justify-content:center; margin-bottom:16px;">
+        <button class="listen-btn" onclick="speakCurrentWord()">Lyssna på ordet</button>
+      </div>
+
+      <input type="text" class="word-input" id="word-input" placeholder="Skriv ordet här..." autocomplete="off" />
+
+      <div class="word-result" id="word-result"></div>
+      <div class="stars" id="word-stars"></div>
+
+      <div class="flex-row mt-12" style="justify-content:center;">
+        <button class="btn btn-green" onclick="checkWord()">Kontrollera</button>
+        <button class="btn btn-purple" id="next-word-btn" onclick="nextWord()" style="display:none">Nästa ord</button>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ===== PANEL 3: FILL IN THE BLANK ===== -->
+  <div id="panel-fillin" class="panel">
+
+    <div class="card">
+      <div class="score-row">
+        <div class="card-title" style="margin-bottom:0;">Fyll i rätt ord</div>
+        <div class="score-pill" id="fill-score">Poäng: 0</div>
+      </div>
+
+      <div id="fill-progress" class="progress-row"></div>
+
+      <p style="font-size:0.95rem; color:#888; margin-bottom:12px;">Välj eller skriv rätt ord i luckan.</p>
+
+      <div id="fill-exercise"></div>
+
+      <div id="fill-hint" class="hidden" style="margin-top:10px; padding:10px 14px; background:#F8FAFC; border-radius:8px; font-size:0.95rem; color:#5B6B7D;">
+        <span id="fill-hint-text"></span>
+      </div>
+
+      <div class="flex-row mt-12">
+        <button class="btn btn-primary" onclick="checkFill()">Kontrollera</button>
+        <button class="btn btn-sm" style="background:#F0F0F0; color:#555; border:none; box-shadow:none;" onclick="showFillHint()">Tips</button>
+        <button class="btn btn-purple" id="next-fill-btn" onclick="nextFill()" style="display:none">Nästa</button>
+      </div>
+
+      <div id="fill-feedback" style="margin-top:16px; font-size:1.1rem; font-weight:700; min-height:28px;"></div>
+    </div>
+
+  </div>
+
+</main>
+
+<footer>Skrivkompis — ett projekt av Elvira Andersson</footer>
+
+<script>
+// =============================================
+//  STATE
+// =============================================
+let currentAge = 6;
+let wordIndex = 0;
+let wordScore = 0;
+let wordResults = [];
+let fillIndex = 0;
+let fillScore = 0;
+let fillResults = [];
+
+// =============================================
+//  AGE-ADAPTED CONTENT
+// =============================================
+const CONTENT = {
+  6: {
+    prompts: [
+      "Skriv en mening om ditt favoritdjur.",
+      "Skriv en mening om vad du äter till frukost.",
+      "Skriv vad du gillar att leka.",
+      "Skriv om din bästa kompis.",
+      "Skriv en mening om din favoritfärg.",
+    ],
+    words: ["katt","hund","sol","bil","mat","bok","hus","dag","natt","mjölk","ägg","boll"],
+    fillExercises: [
+      { before:"Jag ", blank:"äter", after:" frukost varje morgon.", options:["äter","leker","sover"], hint:"Man äter på morgonen." },
+      { before:"Katten ", blank:"sover", after:" på soffan.", options:["sover","springer","hoppar"], hint:"Katter brukar vara trötta." },
+      { before:"Solen ", blank:"skiner", after:" på himlen.", options:["skiner","regnar","blåser"], hint:"Solen lyser!" },
+      { before:"Hunden ", blank:"springer", after:" i parken.", options:["springer","simmar","flyger"], hint:"Hundar rör sig på benen." },
+      { before:"Jag ", blank:"gillar", after:" glass på sommaren.", options:["gillar","hatar","glömmer"], hint:"Glass är gott!" },
+    ],
+    reminders: ["Börja med stor bokstav","Sluta med punkt","Kolla varje ord"],
+  },
+  8: {
+    prompts: [
+      "Skriv en mening om din favoritbok eller film.",
+      "Skriv vad du brukar göra på helgerna.",
+      "Skriv en mening om ditt favoritämne i skolan.",
+      "Beskriv ditt rum i en mening.",
+      "Skriv vad du vill bli när du blir stor.",
+    ],
+    words: ["skola","vänner","sommar","cykel","bibliotek","fotboll","middag","läxor","trädgård","spindel","delfin","pianon"],
+    fillExercises: [
+      { before:"Vi ", blank:"spelar", after:" fotboll efter skolan.", options:["spelar","målar","bakar"], hint:"Fotboll är en sport." },
+      { before:"Hon ", blank:"läser", after:" en bok varje kväll.", options:["läser","hoppar","dansar"], hint:"Man läser böcker." },
+      { before:"Det ", blank:"regnar", after:" ute idag.", options:["regnar","skiner","snöar"], hint:"Titta på vädret." },
+      { before:"Katten ", blank:"klättrar", after:" upp i trädet.", options:["klättrar","simmar","bakar"], hint:"Katter är bra på att klättra." },
+      { before:"Vi ", blank:"åker", after:" buss till skolan.", options:["åker","springer","flyger"], hint:"Bussen är ett transportmedel." },
+    ],
+    reminders: ["Stor bokstav i början","Punkt eller frågetecken i slutet","Kontrollera stavningen","Varje mening ska ha ett verb"],
+  },
+  10: {
+    prompts: [
+      "Skriv en mening om en person du beundrar och varför.",
+      "Beskriv din favoritplats i en mening.",
+      "Skriv en mening om något du vill lära dig.",
+      "Beskriv ett minne från din semester.",
+      "Skriv vad du tycker är viktigast i en vänskap.",
+    ],
+    words: ["miljövänlig","fantastiskt","berättelse","undersökning","civilisation","experiment","konversation","demokrati","evolution","sammanhang","organisera","välkommen"],
+    fillExercises: [
+      { before:"Forskning ", blank:"visar", after:" att läsning förbättrar minnet.", options:["visar","gömmer","försvinner"], hint:"Forskning presenterar bevis." },
+      { before:"Hon ", blank:"förklarade", after:" uppgiften tydligt.", options:["förklarade","gömde","sprang"], hint:"Man förklarar för att hjälpa andra förstå." },
+      { before:"Projektet ", blank:"krävde", after:" mycket planering.", options:["krävde","glömde","sjöng"], hint:"Svåra projekt kräver något." },
+      { before:"Miljön ", blank:"påverkas", after:" av våra val.", options:["påverkas","sover","äter"], hint:"Miljön reagerar på vad vi gör." },
+      { before:"Teamet ", blank:"samarbetade", after:" för att lösa problemet.", options:["samarbetade","grät","flög"], hint:"Flera personer jobbar ihop." },
+    ],
+    reminders: ["Stor bokstav i början","Korrekt skiljetecken i slutet","Stavning och grammatik","Tydlig meningsstruktur med subjekt och verb","Variera dina ord"],
+  },
+};
+
+// =============================================
+//  HELPERS
+// =============================================
+function content() { return CONTENT[currentAge]; }
+
+function setAge(age) {
+  currentAge = age;
+  document.querySelectorAll('.age-btn').forEach(b => b.classList.toggle('active', parseInt(b.dataset.age) === age));
+  document.getElementById('reminder-list').innerHTML = content().reminders.map(r => `<li>${r}</li>`).join('');
+  resetWords();
+  resetFill();
+  newPrompt();
+}
+
+function showPanel(name) {
+  document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('panel-' + name).classList.add('active');
+  event.target.classList.add('active');
+}
+
+function speak(text) {
+  if (!window.speechSynthesis) return;
+  window.speechSynthesis.cancel();
+  const utter = new SpeechSynthesisUtterance(text);
+  utter.lang = 'sv-SE';
+  utter.rate = currentAge <= 6 ? 0.8 : 0.9;
+  window.speechSynthesis.speak(utter);
+}
+
+function readAloud(id) {
+  const text = document.getElementById(id).value.trim();
+  if (text) speak(text);
+  else alert('Skriv en mening först!');
+}
+
+// =============================================
+//  SENTENCE CHECKING
+// =============================================
+const prompts = [];
+
+function newPrompt() {
+  const list = content().prompts;
+  const p = list[Math.floor(Math.random() * list.length)];
+  document.getElementById('sentence-prompt').textContent = p;
+  document.getElementById('sentence-input').value = '';
+  document.getElementById('feedback-box').style.display = 'none';
+}
+
+async function generateAiPrompt() {
+  document.getElementById('sentence-prompt').textContent = 'AI skapar ett nytt ämne...';
+  try {
+    const response = await fetch('/openai/chat', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        model: 'gpt-oss-120b',
+        messages: [
+          { role: 'system', content: 'Du är en varm och uppmuntrande svensk skrivcoach för barn. Ge enkla, roliga skrivuppgifter som känns personliga och tydliga.' },
+          { role: 'user', content: `Ge en kort skrivuppgift som en mening för ett barn på ${currentAge} år. Skriv bara meningen och inga extra instruktioner.` }
+        ],
+        temperature: 0.8,
+        max_tokens: 40,
+      }),
+    });
+
+    const data = await response.json();
+    const prompt = data?.choices?.[0]?.message?.content?.trim();
+    if (prompt) {
+      document.getElementById('sentence-prompt').textContent = prompt;
+      document.getElementById('sentence-input').value = '';
+      document.getElementById('feedback-box').style.display = 'none';
+      return;
+    }
+  } catch (err) {
+    console.error('AI-prompt error', err);
+  }
+
+  newPrompt();
+}
+
+async function loadAiFeedback(text) {
+  const box = document.getElementById('feedback-box');
+  const loading = document.createElement('div');
+  loading.style.marginTop = '12px';
+  loading.style.color = '#555';
+  loading.textContent = 'Hämtar AI-feedback...';
+  box.appendChild(loading);
+  try {
+    // Include the original prompt so the model can check topic match.
+    const promptText = document.getElementById('sentence-prompt').textContent || '';
+    const response = await fetch('/openai/chat', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        model: 'gpt-oss-120b',
+        messages: [
+          { role: 'system', content: 'Du är en vänlig svensk skrivcoach för barn. Ge ett tydligt och kortfattat svar som känns som automatisk feedback. Använd enkelt språk, var positiv, åldersanpassa tonen och kontrollera stavning, skiljetecken, meningsstruktur och om meningen svarar mot uppgiften.' },
+          { role: 'user', content: `Uppgift: "${promptText}"\nÅlder: ${currentAge}\nMening att utvärdera: "${text}"\nSvara på svenska utan Markdown. Ge korta, raka svar med etiketter: SUMMARY, SPELLING (lista fel och förslag), TOPIC_MATCH (Ja/Nej + kort förklaring), SUGGESTION (enkla tips anpassade till åldern), EXAMPLE (en förbättrad version av meningen).` }
+        ],
+        temperature: 0.5,
+        max_tokens: 350,
+      }),
+    });
+
+    const data = await response.json();
+    let aiText = data?.choices?.[0]?.message?.content?.trim() || '';
+
+    // Basic sanitization: remove common Markdown artifacts so it's kid-friendly.
+    aiText = aiText.replace(/\*\*/g, '');
+    aiText = aiText.replace(/^#+\s*/gm, '');
+    aiText = aiText.replace(/\n-\s*/g, '\n');
+
+    if (aiText) {
+      const aiBlock = document.createElement('div');
+      aiBlock.className = 'ai-feedback';
+      const heading = document.createElement('div');
+      heading.className = 'ai-block-label';
+      heading.textContent = 'AI-feedback';
+      aiBlock.appendChild(heading);
+
+      const sections = [];
+      const lines = aiText.split(/\r?\n/);
+      let current = { title: 'Feedback', text: [] };
+
+      lines.forEach(line => {
+        const match = line.match(/^([A-Z_ ]+):\s*(.*)$/);
+        if (match) {
+          if (current.text.length) sections.push(current);
+          current = { title: match[1].trim(), text: [match[2].trim()] };
+        } else {
+          if (line.trim()) current.text.push(line.trim());
+        }
+      });
+      if (current.text.length) sections.push(current);
+
+      sections.forEach(section => {
+        const sectionNode = document.createElement('div');
+        sectionNode.className = 'ai-section';
+        const title = document.createElement('div');
+        title.className = 'ai-section-title';
+        title.textContent = section.title;
+        const text = document.createElement('div');
+        text.className = 'ai-section-text';
+        text.innerHTML = escapeHtml(section.text.join('\n'));
+        sectionNode.appendChild(title);
+        sectionNode.appendChild(text);
+        aiBlock.appendChild(sectionNode);
+      });
+
+      box.removeChild(loading);
+      box.appendChild(aiBlock);
+    } else {
+      box.removeChild(loading);
+    }
+  } catch (err) {
+    console.error('AI-feedback error', err);
+    if (box.contains(loading)) {
+      box.removeChild(loading);
+    }
+  }
+}
+
+// Helper to escape HTML from model output to avoid accidental markup.
+function escapeHtml(str) {
+  return String(str)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;');
+}
+
+
+function checkSentence() {
+  const text = document.getElementById('sentence-input').value.trim();
+  if (!text) { alert('Skriv något först!'); return; }
+
+  const errors = [];
+  const ok = [];
+  const great = [];
+
+  // 1. Starts with capital
+  if (text[0] !== text[0].toUpperCase() || text[0] === text[0].toLowerCase()) {
+    errors.push({ tag: 'Stor bokstav', msg: 'Din mening ska börja med stor bokstav.' });
+  } else {
+    great.push({ tag: 'Stor bokstav', msg: 'Bra! Du började med stor bokstav.' });
+  }
+
+  // 2. Ends with punctuation
+  const lastChar = text[text.length - 1];
+  if (['.','!','?'].includes(lastChar)) {
+    great.push({ tag: 'Skiljetecken', msg: 'Perfekt! Du avslutade meningen rätt.' });
+  } else {
+    errors.push({ tag: 'Skiljetecken', msg: 'Kom ihåg att avsluta med punkt (.), utropstecken (!) eller frågetecken (?).' });
+  }
+
+  // 3. Length check (age-adapted)
+  const wordCount = text.split(/\s+/).filter(Boolean).length;
+  const minWords = currentAge <= 6 ? 3 : currentAge <= 8 ? 4 : 5;
+  if (wordCount < minWords) {
+    ok.push({ tag: 'Meningens längd', msg: `Försök skriva en lite längre mening – minst ${minWords} ord!` });
+  } else {
+    great.push({ tag: 'Meningens längd', msg: `Bra jobbat – ${wordCount} ord!` });
+  }
+
+  // 4. Extra checks for older kids
+  if (currentAge >= 8) {
+    const hasComma = text.includes(',');
+    if (wordCount > 7 && !hasComma) {
+      ok.push({ tag: 'Komma', msg: 'Tips: Lång mening? Prova att lägga in ett komma!' });
+    }
+  }
+
+  // 5. Repeated words (simple check)
+  const words = text.toLowerCase().replace(/[.,!?]/g,'').split(/\s+/);
+  const seen = new Set();
+  const repeated = [];
+  words.forEach(w => { if(seen.has(w) && w.length>3) repeated.push(w); seen.add(w); });
+  if (repeated.length > 0 && currentAge >= 8) {
+    ok.push({ tag: 'Ordupprepning', msg: `Ordet "${repeated[0]}" används flera gånger. Prova ett synonymord!` });
+  }
+
+  renderFeedback(errors, ok, great, text);
+}
+
+function renderFeedback(errors, ok, great, text) {
+  const box = document.getElementById('feedback-box');
+  const totalIssues = errors.length + ok.length;
+
+  let cls, emoji, title;
+  if (errors.length === 0 && ok.length === 0) {
+    cls = 'feedback-great'; emoji = ''; title = 'Fantastiskt! Meningen ser perfekt ut!';
+  } else if (errors.length === 0) {
+    cls = 'feedback-ok'; emoji = ''; title = 'Bra jobbat! Bara lite småsaker kvar.';
+  } else {
+    cls = 'feedback-error'; emoji = ''; title = 'Bra försök! Vi kan förbättra några saker.';
+  }
+
+  const allItems = [
+    ...errors.map(e => `<li><span class="tag tag-error">${e.tag}</span> ${e.msg}</li>`),
+    ...ok.map(o => `<li><span class="tag tag-ok">${o.tag}</span> ${o.msg}</li>`),
+    ...great.map(g => `<li><span class="tag tag-good">${g.tag}</span> ${g.msg}</li>`),
+  ];
+
+  box.className = cls;
+  box.innerHTML = `
+    <div class="feedback-emoji">${emoji}</div>
+    <div class="feedback-title">${title}</div>
+    <ul class="feedback-items">${allItems.join('')}</ul>
+    <div style="margin-top:12px;" class="flex-row">
+      <button class="listen-btn" onclick="speak(document.getElementById('sentence-input').value)">Lyssna på meningen</button>
+    </div>
+  `;
+  box.style.display = 'block';
+  loadAiFeedback(text);
+}
+
+// =============================================
+//  WORD EXERCISE
+// =============================================
+function resetWords() {
+  wordIndex = 0;
+  wordScore = 0;
+  wordResults = [];
+  renderWordProgress();
+  loadWord();
+}
+
+function loadWord() {
+  const words = content().words;
+  if (wordIndex >= words.length) {
+    endWords(); return;
+  }
+  const word = words[wordIndex];
+  const scrambled = scramble(word);
+  document.getElementById('word-display').textContent = scrambled;
+  document.getElementById('word-input').value = '';
+  document.getElementById('word-input').className = 'word-input';
+  document.getElementById('word-result').textContent = '';
+  document.getElementById('word-stars').textContent = '';
+  document.getElementById('next-word-btn').style.display = 'none';
+  document.getElementById('word-input').focus();
+}
+
+function scramble(word) {
+  if (word.length <= 2) return word;
+  let arr = word.split('');
+  for (let i = arr.length - 1; i > 0; i--) {
+    let j = Math.floor(Math.random() * (i + 1));
+    [arr[i], arr[j]] = [arr[j], arr[i]];
+  }
+  const result = arr.join('');
+  return result === word ? scramble(word) : result;
+}
+
+function speakCurrentWord() {
+  const words = content().words;
+  if (wordIndex < words.length) speak(words[wordIndex]);
+}
+
+function checkWord() {
+  const words = content().words;
+  if (wordIndex >= words.length) return;
+  const correct = words[wordIndex];
+  const answer = document.getElementById('word-input').value.trim().toLowerCase();
+  const input = document.getElementById('word-input');
+  const result = document.getElementById('word-result');
+  const stars = document.getElementById('word-stars');
+
+  if (answer === correct) {
+    input.className = 'word-input correct';
+    result.innerHTML = `<span style="color:var(--green-dark)">Rätt! Ordet är "${correct}"</span>`;
+    stars.textContent = 'Bra jobbat';
+    wordScore++;
+    wordResults.push('correct');
+    speak('Rätt! Bra jobbat!');
+  } else {
+    input.className = 'word-input wrong';
+    result.innerHTML = `<span style="color:var(--red)">Inte riktigt. Rätt svar: "${correct}"</span>`;
+    stars.textContent = '';
+    wordResults.push('wrong');
+    speak('Försök igen! Rätt ord är ' + correct);
+  }
+
+  document.getElementById('word-score').textContent = `Poäng: ${wordScore}`;
+  document.getElementById('next-word-btn').style.display = 'inline-flex';
+  renderWordProgress();
+}
+
+function nextWord() {
+  wordIndex++;
+  loadWord();
+}
+
+function renderWordProgress() {
+  const words = content().words;
+  let html = '';
+  for (let i = 0; i < words.length; i++) {
+    if (i < wordResults.length) {
+      html += `<div class="dot done-${wordResults[i]}"></div>`;
+    } else if (i === wordIndex) {
+      html += `<div class="dot current"></div>`;
+    } else {
+      html += `<div class="dot"></div>`;
+    }
+  }
+  document.getElementById('word-progress').innerHTML = html;
+}
+
+function endWords() {
+  const total = content().words.length;
+  document.getElementById('word-display').innerHTML = `${wordScore}/${total}`;
+  document.getElementById('word-result').innerHTML = `<span style="color:var(--orange)">Du är klar! Bra jobbat!</span>`;
+  document.getElementById('word-stars').textContent = wordScore === total ? 'Mycket bra' : wordScore > total/2 ? 'Bra' : '';
+  document.getElementById('next-word-btn').textContent = 'Börja om';
+  document.getElementById('next-word-btn').onclick = resetWords;
+  document.getElementById('next-word-btn').style.display = 'inline-flex';
+}
+
+// =============================================
+//  FILL IN THE BLANK
+// =============================================
+function resetFill() {
+  fillIndex = 0;
+  fillScore = 0;
+  fillResults = [];
+  renderFillProgress();
+  loadFill();
+}
+
+function loadFill() {
+  const exercises = content().fillExercises;
+  if (fillIndex >= exercises.length) {
+    endFill(); return;
+  }
+  const ex = exercises[fillIndex];
+
+  document.getElementById('fill-hint').classList.add('hidden');
+  document.getElementById('fill-feedback').textContent = '';
+  document.getElementById('next-fill-btn').style.display = 'none';
+
+  // Build exercise HTML
+  let html = `<div class="fill-sentence">`;
+  html += ex.before;
+  html += `<input type="text" class="fill-blank" id="fill-blank-input" autocomplete="off" spellcheck="false" />`;
+  html += ex.after;
+  html += `</div>`;
+
+  // Options as clickable chips
+  if (ex.options) {
+    html += `<div class="flex-row">`;
+    ex.options.forEach(opt => {
+      html += `<button class="btn btn-sm" style="background:#F5F5F5; color:#333; border:1.5px solid #ddd; box-shadow:none;" onclick="fillOption('${opt}')">${opt}</button>`;
+    });
+    html += `</div>`;
+  }
+
+  document.getElementById('fill-exercise').innerHTML = html;
+  document.getElementById('fill-blank-input').focus();
+}
+
+function fillOption(word) {
+  document.getElementById('fill-blank-input').value = word;
+}
+
+function showFillHint() {
+  const ex = content().fillExercises[fillIndex];
+  document.getElementById('fill-hint-text').textContent = ex.hint;
+  document.getElementById('fill-hint').classList.remove('hidden');
+}
+
+function checkFill() {
+  const exercises = content().fillExercises;
+  if (fillIndex >= exercises.length) return;
+  const ex = exercises[fillIndex];
+  const answer = document.getElementById('fill-blank-input').value.trim().toLowerCase();
+  const correct = ex.blank.toLowerCase();
+  const input = document.getElementById('fill-blank-input');
+  const feedback = document.getElementById('fill-feedback');
+
+  if (answer === correct) {
+    input.className = 'fill-blank correct';
+    feedback.innerHTML = `<span style="color:var(--green-dark)">Rätt! Bra jobbat!</span>`;
+    fillScore++;
+    fillResults.push('correct');
+    speak('Rätt! Fantastiskt!');
+  } else {
+    input.className = 'fill-blank wrong';
+    feedback.innerHTML = `<span style="color:var(--red)">Inte riktigt. Rätt ord är: <strong>${ex.blank}</strong></span>`;
+    fillResults.push('wrong');
+    speak('Inte riktigt. Rätt svar är ' + ex.blank);
+  }
+
+  document.getElementById('fill-score').textContent = `Poäng: ${fillScore}`;
+  document.getElementById('next-fill-btn').style.display = 'inline-flex';
+  renderFillProgress();
+}
+
+function nextFill() {
+  fillIndex++;
+  loadFill();
+}
+
+function renderFillProgress() {
+  const exercises = content().fillExercises;
+  let html = '';
+  for (let i = 0; i < exercises.length; i++) {
+    if (i < fillResults.length) {
+      html += `<div class="dot done-${fillResults[i]}"></div>`;
+    } else if (i === fillIndex) {
+      html += `<div class="dot current"></div>`;
+    } else {
+      html += `<div class="dot"></div>`;
+    }
+  }
+  document.getElementById('fill-progress').innerHTML = html;
+}
+
+function endFill() {
+  const total = content().fillExercises.length;
+  document.getElementById('fill-exercise').innerHTML = `
+    <div style="text-align:center; padding:20px;">
+      <div style="font-size:1.5rem; color:var(--orange);">Du är klar!</div>
+      <div style="font-size:1.1rem; margin-top:8px;">${fillScore} av ${total} rätt!</div>
+    </div>
+  `;
+  document.getElementById('next-fill-btn').textContent = 'Börja om';
+  document.getElementById('next-fill-btn').onclick = resetFill;
+  document.getElementById('next-fill-btn').style.display = 'inline-flex';
+}
+
+// =============================================
+//  INIT
+// =============================================
+document.addEventListener('keydown', e => {
+  if (e.key === 'Enter') {
+    const active = document.querySelector('.panel.active');
+    if (active.id === 'panel-sentences') checkSentence();
+    else if (active.id === 'panel-words') checkWord();
+    else if (active.id === 'panel-fillin') checkFill();
+  }
+});
+
+newPrompt();
+resetWords();
+resetFill();
+document.getElementById('reminder-list').innerHTML = content().reminders.map(r=>`<li>${r}</li>`).join('');
+</script>
+</body>
+</html>
