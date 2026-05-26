@@ -8,28 +8,29 @@
     @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
 
     :root {
-      --yellow: #BFA56A;
-      --orange: #1F4E79;
+      --yellow: #F3C665;
+      --orange: #F59E0B;
       --green: #2F7C5F;
       --green-dark: #215C44;
-      --blue: #1F4E79;
-      --blue-light: #EEF2F7;
-      --red: #9F3B3B;
+      --blue: #EA580C;
+      --blue-light: #FFEDD5;
+      --red: #C42F2F;
       --purple: #5E5281;
       --white: #FFFFFF;
-      --bg: #F4F5F7;
+      --bg: #EAF2FB;
       --card: #FFFFFF;
       --text: #1F2933;
-      --muted: #5B6B7D;
-      --radius: 10px;
-      --radius-sm: 6px;
+      --muted: #3F5164;
+      --radius: 18px;
+      --radius-sm: 12px;
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; }
 
     body {
       font-family: 'Inter', system-ui, sans-serif;
-      background: var(--bg);
+      font-size: 1.05rem;
+      background: linear-gradient(180deg, #EAF2FB 0%, #F7F8FB 100%);
       color: var(--text);
       min-height: 100vh;
     }
@@ -37,57 +38,66 @@
     /* ===== HEADER ===== */
     header {
       background: var(--orange);
-      padding: 20px 24px 16px;
+      padding: 30px 24px 24px;
       text-align: center;
-      border-bottom: 2px solid rgba(0,0,0,0.12);
+      border-bottom: 2px solid rgba(255,255,255,0.25);
+      box-shadow: 0 8px 20px rgba(245, 158, 11, 0.12);
     }
 
     header h1 {
       font-family: inherit;
-      font-size: 2rem;
+      font-size: 2.6rem;
       color: white;
-      text-shadow: none;
+      letter-spacing: 0.03em;
+      margin-bottom: 10px;
     }
 
     header p {
-      font-size: 1rem;
-      color: rgba(255,255,255,0.9);
-      margin-top: 4px;
+      font-size: 1.15rem;
+      color: rgba(255,255,255,0.95);
+      margin-top: 6px;
+      max-width: 740px;
+      margin-left: auto;
+      margin-right: auto;
     }
 
     /* ===== AGE PICKER ===== */
     #age-bar {
       display: flex;
       justify-content: center;
-      gap: 10px;
-      padding: 14px 16px;
-      background: #F8FAFC;
-      border-bottom: 1px solid #E2E8F0;
+      gap: 12px;
+      padding: 18px 16px;
+      background: #FFFFFF;
+      border-radius: var(--radius);
+      border: 1px solid #D6E4F3;
+      box-shadow: 0 4px 12px rgba(245, 158, 11, 0.08);
       flex-wrap: wrap;
+      margin: 0 16px 16px;
     }
 
     #age-bar span {
       font-weight: 700;
-      font-size: 0.9rem;
+      font-size: 1.1rem;
       color: var(--muted);
       display: flex;
       align-items: center;
     }
 
     .age-btn {
-      padding: 6px 18px;
-      border-radius: 10px;
-      border: 2.5px solid #ddd;
-      background: white;
+      padding: 14px 22px;
+      border-radius: 999px;
+      border: 2px solid transparent;
+      background: #FFF4E0;
       font-family: inherit;
       font-weight: 800;
-      font-size: 0.9rem;
+      font-size: 1.1rem;
       cursor: pointer;
       transition: all 0.2s;
-      color: var(--text);
+      color: var(--blue);
+      min-width: 130px;
     }
 
-    .age-btn:hover { border-color: var(--orange); color: var(--orange); }
+    .age-btn:hover { transform: translateY(-1px); border-color: rgba(245, 158, 11, 0.18); }
     .age-btn.active { background: var(--orange); border-color: var(--orange); color: white; }
 
     /* ===== NAVIGATION TABS ===== */
@@ -101,22 +111,21 @@
 
     .tab-btn {
       flex: 1;
-      padding: 14px 8px;
+      padding: 18px 14px;
       border: none;
-      background: none;
+      background: #FFFFFF;
       font-family: inherit;
-      font-weight: 700;
-      font-size: 0.85rem;
+      font-weight: 800;
+      font-size: 1.1rem;
       cursor: pointer;
-      color: var(--muted);
-      border-bottom: 3px solid transparent;
-      margin-bottom: -3px;
+      color: var(--blue);
+      box-shadow: 0 6px 14px rgba(245, 158, 11, 0.08);
       transition: all 0.2s;
       white-space: nowrap;
     }
 
-    .tab-btn:hover { color: var(--orange); }
-    .tab-btn.active { color: var(--orange); border-bottom-color: var(--orange); }
+    .tab-btn:hover { transform: translateY(-1px); }
+    .tab-btn.active { background: var(--orange); color: white; box-shadow: 0 8px 18px rgba(245, 158, 11, 0.18); }
 
     /* ===== MAIN CONTENT ===== */
     main {
@@ -140,63 +149,94 @@
 
     .card-title {
       font-family: inherit;
-      font-size: 1.2rem;
+      font-size: 1.3rem;
       color: var(--orange);
-      margin-bottom: 12px;
+      margin-bottom: 14px;
       display: flex;
       align-items: center;
-      gap: 8px;
+      gap: 10px;
     }
 
-    .card-title .icon { font-size: 1.4rem; }
+    .card-title .icon { font-size: 1.5rem; }
 
     /* ===== TEXTAREA ===== */
     textarea {
       width: 100%;
-      min-height: 120px;
-      border-radius: var(--radius-sm);
-      border: 2.5px solid #ddd;
-      padding: 14px;
+      min-height: 150px;
+      border-radius: 18px;
+      border: 2px solid #D7E5F5;
+      padding: 20px;
       font-family: inherit;
-      font-size: 1.1rem;
+      font-size: 1.2rem;
       resize: vertical;
       outline: none;
-      transition: border-color 0.2s;
-      line-height: 1.6;
+      transition: border-color 0.2s, box-shadow 0.2s;
+      line-height: 1.85;
+      background: #FCFDFF;
     }
 
-    textarea:focus { border-color: var(--orange); }
+    textarea:focus { border-color: var(--orange); box-shadow: 0 0 0 4px rgba(245, 158, 11, 0.18); }
 
     /* ===== BUTTONS ===== */
     .btn {
       display: inline-flex;
       align-items: center;
-      gap: 8px;
-      padding: 12px 24px;
-      border-radius: 10px;
+      justify-content: center;
+      gap: 10px;
+      padding: 16px 26px;
+      border-radius: 14px;
       border: none;
       font-family: inherit;
       font-weight: 800;
-      font-size: 1rem;
+      font-size: 1.1rem;
       cursor: pointer;
       transition: all 0.2s;
+      min-height: 50px;
     }
 
     .btn:active { transform: scale(0.96); }
 
-    .btn-primary { background: var(--orange); color: white; box-shadow: none; }
-    .btn-primary:hover { background: #173f65; }
+    .btn-primary { background: var(--orange); color: white; box-shadow: 0 10px 20px rgba(245, 158, 11, 0.16); }
+    .btn-primary:hover { background: #c2410c; }
 
-    .btn-green { background: var(--green); color: white; box-shadow: none; }
+    .btn-green { background: var(--green); color: white; box-shadow: 0 10px 20px rgba(34,114,84,0.16); }
     .btn-green:hover { background: #276c51; }
 
-    .btn-purple { background: var(--purple); color: white; box-shadow: none; }
+    .btn-purple { background: var(--purple); color: white; box-shadow: 0 10px 20px rgba(94,82,129,0.16); }
     .btn-purple:hover { background: #4a426f; }
 
     .btn-sm {
-      padding: 8px 16px;
-      font-size: 0.9rem;
+      padding: 12px 22px;
+      font-size: 1rem;
+      min-height: 50px;
     }
+
+    .btn-secondary {
+      background: #F0F0F0;
+      color: #555;
+      border: none;
+      box-shadow: none;
+    }
+
+    .btn-secondary:hover {
+      background: #E5E7EB;
+    }
+
+    .listen-btn {
+      background: #FFF4E0;
+      border: 2px solid var(--orange);
+      color: var(--orange);
+      font-family: inherit;
+      font-weight: 700;
+      padding: 12px 22px;
+      border-radius: 14px;
+      cursor: pointer;
+      font-size: 1rem;
+      transition: all 0.2s;
+      min-height: 50px;
+    }
+
+    .listen-btn:hover { background: var(--orange); color: white; }
 
     /* ===== FEEDBACK BOX ===== */
     #feedback-box {
@@ -217,17 +257,17 @@
     .feedback-error { background: #FEF3F2; border: 1px solid #FBCACA; }
 
     .feedback-emoji { font-size: 2.5rem; text-align: center; margin-bottom: 8px; }
-    .feedback-title { font-family: inherit; font-size: 1.2rem; margin-bottom: 10px; }
+    .feedback-title { font-family: inherit; font-size: 1.35rem; margin-bottom: 14px; }
     .feedback-great .feedback-title { color: var(--green-dark); }
     .feedback-ok .feedback-title { color: #B88A00; }
     .feedback-error .feedback-title { color: var(--red); }
 
     .feedback-items { list-style: none; }
     .feedback-items li {
-      padding: 6px 0;
-      font-size: 1rem;
+      padding: 12px 0;
+      font-size: 1.15rem;
       display: flex;
-      gap: 8px;
+      gap: 10px;
       align-items: flex-start;
     }
 
@@ -242,28 +282,38 @@
 
     .ai-feedback {
       margin-top: 16px;
+      border-radius: var(--radius);
+      border: 1px solid #D1D5DB;
+      background: var(--card);
+      padding: 18px 16px;
     }
 
-    .ai-section {
-      background: #ffffff;
-      border: 1px solid #D7E3F0;
-      border-radius: 12px;
-      padding: 14px;
-      margin-top: 12px;
+    .ai-feedback .feedback-title {
+      margin-bottom: 12px;
     }
 
-    .ai-section-title {
-      font-size: 0.95rem;
-      font-weight: 800;
-      color: var(--orange);
-      margin-bottom: 8px;
+    .ai-feedback .feedback-items {
+      margin: 0;
+      padding: 0;
     }
 
+    .ai-feedback .feedback-items li {
+      padding: 8px 0;
+      border-bottom: 1px solid #EFF2F7;
+    }
+
+    .ai-feedback .feedback-items li:last-child {
+      border-bottom: none;
+    }
+
+    .ai-feedback .tag {
+      min-width: 110px;
+    }
+
+    .ai-section,
+    .ai-section-title,
     .ai-section-text {
-      font-size: 0.96rem;
-      color: #23303f;
-      line-height: 1.7;
-      white-space: pre-wrap;
+      display: none;
     }
 
     .ai-block-label {
@@ -271,7 +321,7 @@
       align-items: center;
       gap: 6px;
       margin-bottom: 8px;
-      color: #1F4E79;
+      color: var(--orange);
       font-size: 0.9rem;
       font-weight: 700;
     }
@@ -350,9 +400,9 @@
 
     /* ===== LISTEN / TTS BUTTON ===== */
     .listen-btn {
-      background: var(--blue-light);
-      border: 2px solid var(--blue);
-      color: var(--blue);
+      background: #FFF4E0;
+      border: 2px solid var(--orange);
+      color: var(--orange);
       font-family: inherit;
       font-weight: 700;
       padding: 8px 20px;
@@ -362,7 +412,7 @@
       transition: all 0.2s;
     }
 
-    .listen-btn:hover { background: var(--blue); color: white; }
+    .listen-btn:hover { background: var(--orange); color: white; }
 
     /* ===== SCORE BAR ===== */
     .score-row {
@@ -419,30 +469,23 @@
 <body>
 
 <header>
-  <h1>Din Personliga Skrivkompis</h1>
-  <p>Träna på att skriva — och få hjälp direkt!</p>
+  <h1>Din Skrivkompis</h1>
+  <p>Lätt att använda. Skriv meningar, träna ord och få snabba tips som är roliga och enkla.</p>
 </header>
 
 <!-- Age picker -->
 <div id="age-bar">
-  <span>Din ålder:</span>
+  <span>Välj din ålder</span>
   <button class="age-btn active" data-age="6" onclick="setAge(6)">6–7 år</button>
   <button class="age-btn" data-age="8" onclick="setAge(8)">8–9 år</button>
   <button class="age-btn" data-age="10" onclick="setAge(10)">10–12 år</button>
 </div>
 
-<div class="card" style="background:#F8FAFC;">
-  <div class="card-title">AI-funktion</div>
-  <p style="margin:0; color:#555; line-height:1.6;">
-    Kör en lokal server i samma mapp och proxy-anrop till OpenAI därifrån. Öppna sedan sidan via <code>http://localhost:3000/index%20(1).html</code>.
-  </p>
-</div>
-
 <!-- Navigation -->
 <div id="tabs">
-  <button class="tab-btn active" onclick="showPanel('sentences')">Meningar</button>
-  <button class="tab-btn" onclick="showPanel('words')">Ord</button>
-  <button class="tab-btn" onclick="showPanel('fillin')">Fyll i</button>
+  <button class="tab-btn active" onclick="showPanel('sentences')">✍️ Meningar</button>
+  <button class="tab-btn" onclick="showPanel('words')">🔤 Ord</button>
+  <button class="tab-btn" onclick="showPanel('fillin')">🧩 Fyll i</button>
 </div>
 
 <main>
@@ -462,19 +505,18 @@
       <div class="flex-row mt-12">
         <button class="btn btn-primary" onclick="checkSentence()">Kolla meningen</button>
         <button class="listen-btn" onclick="readAloud('sentence-input')">Läs upp</button>
-        <button class="btn btn-sm" style="background:#F0F0F0; color:#555; border:none; box-shadow:none;" onclick="newPrompt()">Nytt ämne</button>
-        <button class="btn btn-sm" style="background:#EEF2FF; color:#1F4E79; border:none; box-shadow:none;" onclick="generateAiPrompt()">AI-generera</button>
+        <button class="btn btn-sm btn-secondary" onclick="newPrompt()">Nytt ämne</button>
       </div>
 
       <div id="feedback-box"></div>
     </div>
 
     <div class="card" style="background:#F8FAFC;">
-      <div class="card-title" style="color:var(--red);">Kom ihåg!</div>
-      <ul id="reminder-list" style="list-style:none; line-height:2;">
-        <li>Börja med stor bokstav</li>
-        <li>Avsluta med punkt, utropstecken eller frågetecken</li>
-        <li>Kolla stavningen på varje ord</li>
+      <div class="card-title" style="color:var(--red);">Tips</div>
+      <ul id="reminder-list" style="list-style:none; line-height:2.1; font-size:1rem;">
+        <li>Börja alltid med stor bokstav.</li>
+        <li>Avsluta meningen med punkt, ? eller !.</li>
+        <li>Läs igenom och kolla stavningen.</li>
       </ul>
     </div>
 
@@ -493,7 +535,7 @@
 
       <div class="word-display" id="word-display"></div>
 
-      <div class="flex-row" style="justify-content:center; margin-bottom:16px;">
+      <div class="flex-row" style="justify-content:center; gap:10px; margin-bottom:16px;">
         <button class="listen-btn" onclick="speakCurrentWord()">Lyssna på ordet</button>
       </div>
 
@@ -628,6 +670,7 @@ function setAge(age) {
   resetWords();
   resetFill();
   newPrompt();
+  startBackgroundAi();
 }
 
 function showPanel(name) {
@@ -665,8 +708,12 @@ function newPrompt() {
   document.getElementById('feedback-box').style.display = 'none';
 }
 
-async function generateAiPrompt() {
-  document.getElementById('sentence-prompt').textContent = 'AI skapar ett nytt ämne...';
+async function generateAiPrompt(button) {
+  if (button) button.disabled = true;
+  if (button) button.textContent = 'AI hämtar teman...';
+  const promptElem = document.getElementById('sentence-prompt');
+  promptElem.textContent = 'AI skapar nya teman...';
+
   try {
     const response = await fetch('/openai/chat', {
       method: 'POST',
@@ -675,26 +722,146 @@ async function generateAiPrompt() {
         model: 'gpt-oss-120b',
         messages: [
           { role: 'system', content: 'Du är en varm och uppmuntrande svensk skrivcoach för barn. Ge enkla, roliga skrivuppgifter som känns personliga och tydliga.' },
-          { role: 'user', content: `Ge en kort skrivuppgift som en mening för ett barn på ${currentAge} år. Skriv bara meningen och inga extra instruktioner.` }
+          { role: 'user', content: `Ge 5 korta skrivteman som meningar för ett barn på ${currentAge} år. Skriv en lista med ett tema per rad, utan extra instruktioner.` }
         ],
         temperature: 0.8,
-        max_tokens: 40,
+        max_tokens: 140,
       }),
     });
 
     const data = await response.json();
-    const prompt = data?.choices?.[0]?.message?.content?.trim();
-    if (prompt) {
-      document.getElementById('sentence-prompt').textContent = prompt;
+    const aiText = data?.choices?.[0]?.message?.content?.trim() || '';
+    const prompts = parseAiList(aiText).slice(0, 5);
+    if (prompts.length > 0) {
+      CONTENT[currentAge].prompts = prompts;
+      promptElem.textContent = prompts[0];
       document.getElementById('sentence-input').value = '';
       document.getElementById('feedback-box').style.display = 'none';
       return;
     }
   } catch (err) {
     console.error('AI-prompt error', err);
+  } finally {
+    if (button) {
+      button.disabled = false;
+      button.textContent = 'AI-teman';
+    }
   }
 
   newPrompt();
+}
+
+function parseAiList(text) {
+  return text
+    .trim()
+    .split(/\r?\n/)
+    .map(line => line.replace(/^[\d\-\)\.\s]+/, '').trim())
+    .filter(Boolean);
+}
+
+function parseAiFillExercises(text) {
+  const jsonMatch = text.match(/(\[\s*\{[\s\S]*\}\s*\])/);
+  if (jsonMatch) {
+    try {
+      return JSON.parse(jsonMatch[1]);
+    } catch (err) {
+      console.warn('AI fill JSON parse failed', err);
+    }
+  }
+
+  const parts = text.trim().split(/\r?\n/).filter(Boolean);
+  const exercises = [];
+  parts.forEach(line => {
+    const fields = line.split('|').map(f => f.trim());
+    if (fields.length >= 4) {
+      exercises.push({
+        before: fields[0],
+        blank: fields[1],
+        after: fields[2],
+        options: fields[3].split(',').map(o => o.trim()),
+        hint: fields[4] ? fields[4].trim() : 'Tänk på vad som passar bäst.'
+      });
+    }
+  });
+  return exercises;
+}
+
+async function generateAiWords(button) {
+  if (button) button.disabled = true;
+  if (button) button.textContent = 'AI hämtar ord...';
+
+  try {
+    const response = await fetch('/openai/chat', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        model: 'gpt-oss-120b',
+        messages: [
+          { role: 'system', content: 'Du är en snäll svensk ordpedagog för barn. Ge korta, lätta svenska ord för att öva stavning.' },
+          { role: 'user', content: `Ge en lista med 8 svenska ord som passar för ett barn på ${currentAge} år. Svara med en enkel lista, ett ord per rad.` }
+        ],
+        temperature: 0.8,
+        max_tokens: 120,
+      }),
+    });
+
+    const data = await response.json();
+    const aiText = data?.choices?.[0]?.message?.content?.trim() || '';
+    const words = parseAiList(aiText).slice(0, 8);
+    if (words.length > 0) {
+      CONTENT[currentAge].words = words;
+      resetWords();
+    }
+  } catch (err) {
+    console.error('AI-words error', err);
+  } finally {
+    if (button) {
+      button.disabled = false;
+      button.textContent = 'AI-ord';
+    }
+  }
+}
+
+async function generateAiFillExercises(button) {
+  if (button) button.disabled = true;
+  if (button) button.textContent = 'AI hämtar övning...';
+
+  try {
+    const response = await fetch('/openai/chat', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        model: 'gpt-oss-120b',
+        messages: [
+          { role: 'system', content: 'Du är en svensk pedagog som skapar fyll-i-luckan-övningar för barn. Ge enkla meningar med ett ord som saknas och tre alternativ.' },
+          { role: 'user', content: `Ge 5 övningar för ett barn på ${currentAge} år. Svara i JSON-format som en lista med objekt: {"before":"...","blank":"...","after":"...","options":["...","...","..."],"hint":"..."}` }
+        ],
+        temperature: 0.8,
+        max_tokens: 260,
+      }),
+    });
+
+    const data = await response.json();
+    const aiText = data?.choices?.[0]?.message?.content?.trim() || '';
+    const exercises = parseAiFillExercises(aiText);
+    if (exercises.length > 0) {
+      CONTENT[currentAge].fillExercises = exercises.slice(0, 5);
+      resetFill();
+    }
+  } catch (err) {
+    console.error('AI-fill error', err);
+  } finally {
+    if (button) {
+      button.disabled = false;
+      button.textContent = 'AI-övning';
+    }
+  }
+}
+
+function startBackgroundAi() {
+  generateAiPrompt();
+  generateAiWords();
+  generateAiFillExercises();
 }
 
 async function loadAiFeedback(text) {
@@ -713,7 +880,7 @@ async function loadAiFeedback(text) {
       body: JSON.stringify({
         model: 'gpt-oss-120b',
         messages: [
-          { role: 'system', content: 'Du är en vänlig svensk skrivcoach för barn. Ge ett tydligt och kortfattat svar som känns som automatisk feedback. Använd enkelt språk, var positiv, åldersanpassa tonen och kontrollera stavning, skiljetecken, meningsstruktur och om meningen svarar mot uppgiften.' },
+          { role: 'system', content: `Du är en varm svensk skrivcoach för barn. Anpassa tonen efter ålder: för 6–7-åringar använd mycket korta, enkla meningar och lättläst språk. För 8–10-åringar skriv fortfarande enkelt men lite mer utvecklat. Var positiv, tydlig och fokusera på stavning, skiljetecken, meningsbyggnad och om meningen följer uppgiften.` },
           { role: 'user', content: `Uppgift: "${promptText}"\nÅlder: ${currentAge}\nMening att utvärdera: "${text}"\nSvara på svenska utan Markdown. Ge korta, raka svar med etiketter: SUMMARY, SPELLING (lista fel och förslag), TOPIC_MATCH (Ja/Nej + kort förklaring), SUGGESTION (enkla tips anpassade till åldern), EXAMPLE (en förbättrad version av meningen).` }
         ],
         temperature: 0.5,
@@ -730,13 +897,7 @@ async function loadAiFeedback(text) {
     aiText = aiText.replace(/\n-\s*/g, '\n');
 
     if (aiText) {
-      const aiBlock = document.createElement('div');
-      aiBlock.className = 'ai-feedback';
-      const heading = document.createElement('div');
-      heading.className = 'ai-block-label';
-      heading.textContent = 'AI-feedback';
-      aiBlock.appendChild(heading);
-
+      const list = box.querySelector('.feedback-items');
       const sections = [];
       const lines = aiText.split(/\r?\n/);
       let current = { title: 'Feedback', text: [] };
@@ -752,24 +913,34 @@ async function loadAiFeedback(text) {
       });
       if (current.text.length) sections.push(current);
 
-      sections.forEach(section => {
-        const sectionNode = document.createElement('div');
-        sectionNode.className = 'ai-section';
-        const title = document.createElement('div');
-        title.className = 'ai-section-title';
-        title.textContent = section.title;
-        const text = document.createElement('div');
-        text.className = 'ai-section-text';
-        text.innerHTML = escapeHtml(section.text.join('\n'));
-        sectionNode.appendChild(title);
-        sectionNode.appendChild(text);
-        aiBlock.appendChild(sectionNode);
+      const tagMap = {
+        SUMMARY: { label: 'Sammanfattning', cls: 'tag-good' },
+        SPELLING: { label: 'Stavning', cls: 'tag-error' },
+        TOPIC_MATCH: { label: 'Ämne', cls: 'tag-ok' },
+        SUGGESTION: { label: 'Tips', cls: 'tag-good' },
+        EXAMPLE: { label: 'Exempel', cls: 'tag-good' },
+      };
+
+      const aiItems = sections.map(section => {
+        const info = tagMap[section.title] || { label: section.title, cls: 'tag-ok' };
+        const li = document.createElement('li');
+        const tag = document.createElement('span');
+        tag.className = `tag ${info.cls}`;
+        tag.textContent = info.label;
+        const text = document.createElement('span');
+        text.style.marginLeft = '10px';
+        text.textContent = section.text.join(' ');
+        li.appendChild(tag);
+        li.appendChild(text);
+        return { element: li, priority: info.cls === 'tag-good' ? 1 : info.cls === 'tag-ok' ? 2 : 3 };
       });
 
+      aiItems.sort((a, b) => a.priority - b.priority);
+      aiItems.forEach(item => { if (list) list.appendChild(item.element); });
+      sortFeedbackList(list);
       box.removeChild(loading);
-      box.appendChild(aiBlock);
     } else {
-      box.removeChild(loading);
+      if (box.contains(loading)) box.removeChild(loading);
     }
   } catch (err) {
     console.error('AI-feedback error', err);
@@ -777,6 +948,20 @@ async function loadAiFeedback(text) {
       box.removeChild(loading);
     }
   }
+}
+
+function sortFeedbackList(list) {
+  if (!list) return;
+  const order = { 'tag-good': 1, 'tag-ok': 2, 'tag-error': 3 };
+  const items = Array.from(list.children);
+  items.sort((a, b) => {
+    const aTag = a.querySelector('.tag');
+    const bTag = b.querySelector('.tag');
+    const aClass = aTag?.classList.contains('tag-good') ? 'tag-good' : aTag?.classList.contains('tag-ok') ? 'tag-ok' : 'tag-error';
+    const bClass = bTag?.classList.contains('tag-good') ? 'tag-good' : bTag?.classList.contains('tag-ok') ? 'tag-ok' : 'tag-error';
+    return order[aClass] - order[bClass];
+  });
+  items.forEach(item => list.appendChild(item));
 }
 
 // Helper to escape HTML from model output to avoid accidental markup.
@@ -842,26 +1027,27 @@ function checkSentence() {
 
 function renderFeedback(errors, ok, great, text) {
   const box = document.getElementById('feedback-box');
-  const totalIssues = errors.length + ok.length;
 
-  let cls, emoji, title;
-  if (errors.length === 0 && ok.length === 0) {
-    cls = 'feedback-great'; emoji = ''; title = 'Fantastiskt! Meningen ser perfekt ut!';
-  } else if (errors.length === 0) {
-    cls = 'feedback-ok'; emoji = ''; title = 'Bra jobbat! Bara lite småsaker kvar.';
+  let cls, title;
+  if (errors.length > 0) {
+    cls = 'feedback-error';
+    title = currentAge <= 7 ? 'Bra försök! Här är enkla tips.' : 'Bra försök! Vi kan förbättra några saker.';
+  } else if (ok.length > 0) {
+    cls = 'feedback-ok';
+    title = currentAge <= 7 ? 'Bra! Lite enklare fixar kvar.' : 'Bra jobbat! Bara lite småsaker kvar.';
   } else {
-    cls = 'feedback-error'; emoji = ''; title = 'Bra försök! Vi kan förbättra några saker.';
+    cls = 'feedback-great';
+    title = currentAge <= 7 ? 'Jättebra! Meningen är fin!' : 'Fantastiskt! Meningen ser perfekt ut!';
   }
 
   const allItems = [
-    ...errors.map(e => `<li><span class="tag tag-error">${e.tag}</span> ${e.msg}</li>`),
-    ...ok.map(o => `<li><span class="tag tag-ok">${o.tag}</span> ${o.msg}</li>`),
     ...great.map(g => `<li><span class="tag tag-good">${g.tag}</span> ${g.msg}</li>`),
+    ...ok.map(o => `<li><span class="tag tag-ok">${o.tag}</span> ${o.msg}</li>`),
+    ...errors.map(e => `<li><span class="tag tag-error">${e.tag}</span> ${e.msg}</li>`),
   ];
 
   box.className = cls;
   box.innerHTML = `
-    <div class="feedback-emoji">${emoji}</div>
     <div class="feedback-title">${title}</div>
     <ul class="feedback-items">${allItems.join('')}</ul>
     <div style="margin-top:12px;" class="flex-row">
@@ -924,18 +1110,25 @@ function checkWord() {
   const result = document.getElementById('word-result');
   const stars = document.getElementById('word-stars');
 
-  if (answer === correct) {
+  const previous = wordResults[wordIndex];
+  const isCorrect = answer === correct;
+
+  if (isCorrect) {
     input.className = 'word-input correct';
     result.innerHTML = `<span style="color:var(--green-dark)">Rätt! Ordet är "${correct}"</span>`;
     stars.textContent = 'Bra jobbat';
-    wordScore++;
-    wordResults.push('correct');
+    if (previous !== 'correct') {
+      wordScore++;
+      wordResults[wordIndex] = 'correct';
+    }
     speak('Rätt! Bra jobbat!');
   } else {
     input.className = 'word-input wrong';
     result.innerHTML = `<span style="color:var(--red)">Inte riktigt. Rätt svar: "${correct}"</span>`;
     stars.textContent = '';
-    wordResults.push('wrong');
+    if (previous !== 'correct') {
+      wordResults[wordIndex] = 'wrong';
+    }
     speak('Försök igen! Rätt ord är ' + correct);
   }
 
@@ -1101,6 +1294,7 @@ document.addEventListener('keydown', e => {
 newPrompt();
 resetWords();
 resetFill();
+startBackgroundAi();
 document.getElementById('reminder-list').innerHTML = content().reminders.map(r=>`<li>${r}</li>`).join('');
 </script>
 </body>
